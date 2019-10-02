@@ -22,7 +22,7 @@ enum FlightStatus: String {
     case scheduled = "Scheduled"
     case canceled = "Canceled"
     case delayed = "Delayed"
-    case landed = "Landed"
+    
 }
 
 struct Airport{
@@ -51,6 +51,22 @@ class DepartureBoard{
     
     init(airPort:Airport){
         self.airPort = airPort
+    }
+    
+   func alertPassengers() {
+        for flight in flights {
+            
+            switch flight.status {
+            case .canceled:
+                print("We're sorry your flight to \(flight.destination) was canceled, here is a $500 voucher")
+            case .scheduled:
+                print("Your flight to \(flight.destination) is scheduled to depart at \(flight.departure?.description) from terminal: \(flight.terminal)")
+            case .delayed:
+                print("Your flight to \(flight.destination) has been delayed.")
+            case .enRoute:
+                print("Your flight to \(flight.destination) left at \(flight.departure?.description) from terminal: \(flight.terminal)")
+            }
+        }
     }
 }
 
@@ -87,15 +103,15 @@ departureBoard.flights.append(flight3)
 //:
 //: d. Print out the current DepartureBoard you created using the function
 
-//func printDepartures(departureBoard: DepartureBoard){
-//
-//    print("Destination    Airline    Flight    Departure     Terminal")
-//    for departure in departureBoard.flights {
-//        print ("\(departure.destination)      \(departure.airline)    \(departure.flightName)    \(departure.departure)     \(departure.status.rawValue)    \(departure.terminal)")
-//    }
-//
-//}
-//printDepartures(departureBoard: departureBoard)
+func printDepartures(departureBoard: DepartureBoard){
+
+    print("Destination    Airline    Flight    Departure     Terminal")
+    for departure in departureBoard.flights {
+        print ("\(departure.destination)      \(departure.airline)    \(departure.flightName)    \(departure.departure)     \(departure.status.rawValue)    \(departure.terminal)")
+    }
+
+}
+printDepartures(departureBoard: departureBoard)
 
 
 //: ## 4. Make a second function to print print an empty string if the `departureTime` is nil
@@ -142,6 +158,7 @@ printDepartures2(departureBoard: departureBoard)
 //: d. Call the `alertPassengers()` function on your `DepartureBoard` object below
 //:
 //: f. Stretch: Display a custom message if the `terminal` is `nil`, tell the traveler to see the nearest information desk for more details.
+departureBoard.alertPassengers()
 
 
 
